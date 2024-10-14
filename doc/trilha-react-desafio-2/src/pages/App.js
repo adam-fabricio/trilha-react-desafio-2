@@ -1,9 +1,11 @@
+
 import { useState } from 'react';
 import gitLogo from '../assets/github.png'
 import Input from '../components/Input';
 import Button from '../components/Button';
 import ItemRepo from '../components/ItemRepo';
 import { api } from '../services/api';
+
 import { Container } from './styles';
 
 function App() {
@@ -32,7 +34,9 @@ function App() {
   }
 
   const handleRemoveRepo = (id) => {
-    setRepos(repos.filter(item => item.id !== id));
+    console.log('Removendo registro', id);
+
+    // utilizar filter.
   }
 
 
