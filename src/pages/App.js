@@ -1,5 +1,13 @@
+import axios from 'axios';
 import { Container } from './styles';
 import React, { useState } from 'react';
+
+
+const api = axios.create({
+  baseURL: 'https://api.github.com'
+})
+
+
 
 function Input({value, onChange}) {
   return (
@@ -29,10 +37,10 @@ function ItemRepo({repo, handlerRemoveRepo}) {
 
   return (
     <Container onClick={handleRemove}>
-      <h3>Olá</h3>
-      <p>{repo}</p>
-      <a href="google.com" target='_black'> ver repositorio</a><br/>
-      <a href="#"> remover</a><br/>
+      <h3>{repo.name}</h3>
+      <p>{repo.full_name}</p>
+      <a href={repo.html_url} rel="noreferrer" target='_black'> ver repositorio</a><br/>
+      <a href="#" rel="noreferrer" classname="remover"> remover</a><br/>
       <hr />
     </Container>
   )
@@ -44,15 +52,16 @@ function App() {
   const [repos, setRepos] = useState([]);
 
   const handlerSearchRepo = async() => {
-    setRepos(itens => [...itens, currentRepo]);
+    const {data} = await api.get(`repos/${currentRepo}`)
+    console.log(data);
+    setRepos(itens => [...itens, data]);
     setCurrentRepo('');
+    console.log("ok");
     return;
   }
 
   const handlerRemoveRepo = (value) => {
-    console.log(repos);
-    setRepos(repos.filter((repo) => value !== repo));
-    console.log(repos);
+    setRepos(repos.filter((repo) => value.id !== repo.id));
     return;
   }
 
