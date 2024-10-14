@@ -19,11 +19,18 @@ function Button({onClick}) {
   )
 }
 
+
 function ItemRepo({repo, handlerRemoveRepo}) {
+
+  const handleRemove = () => {
+    handlerRemoveRepo(repo)
+  }
+
+
   return (
-    <Container>
+    <Container onClick={handleRemove}>
       <h3>Olá</h3>
-      <p>Adam</p>
+      <p>{repo}</p>
       <a href="google.com" target='_black'> ver repositorio</a><br/>
       <a href="#"> remover</a><br/>
       <hr />
@@ -37,16 +44,19 @@ function App() {
   const [repos, setRepos] = useState([]);
 
   const handlerSearchRepo = async() => {
-    setRepos(itens => [...itens, "1"]);
+    setRepos(itens => [...itens, currentRepo]);
     setCurrentRepo('');
     return;
   }
 
-  const handlerRemoveRepo = async() => {
-    setRepos(['1']);
-    setCurrentRepo('');
+  const handlerRemoveRepo = (value) => {
+    console.log(repos);
+    setRepos(repos.filter((repo) => value !== repo));
+    console.log(repos);
     return;
   }
+
+
   return (
     <div className="App">
       <Container>
